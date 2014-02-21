@@ -1,5 +1,6 @@
 $(function() {
     $( ".sortable" ).sortable();
+    
   });
 $( init );
  
@@ -87,9 +88,9 @@ function init() {
         }
 		//html to append
 		var outputHTML;
-		console.log('appeded ID: ' + toAppend.id);
-                console.log('appeded Label: ' + toAppend.label);
-                console.log(toAppend.html);
+//		console.log('appeded ID: ' + toAppend.id);
+//                console.log('appeded Label: ' + toAppend.label);
+//                console.log(toAppend.html);
         return this.append(toAppend.html);
     };
 
@@ -130,7 +131,6 @@ function bsFormElement(options) {
                     data-toggle="dropdown" id="dropdown">'+
                     this.placeholder+ ' '+ '<span class="caret"></span></button><ul class="dropdown-menu">';
                     for (var i = 0; i < this.multiOptions.length; i++) {
-                        console.log('for');
                         this.html += '<li><a href="#" tabindex="-1"> '
                                 + this.multiOptions[i] + '</a></li>'
                     }
@@ -171,21 +171,27 @@ placeHolder: 'Text',
 glyphicon: 'glyphicon-align-justify'
 }
 );
-//save Form function
+//save Form using button function
 (function ( $ ) { 
 
 	$('#saveBtn').click(function(e){
 		var savedForm= $('#resultArea').html();
-		$.post('http://localhost:8080/BootStrapForms/NewServlet',
+		$.post('http://localhost:8080/Bootstrap-Forms/NewServlet',
                     {form : savedForm} 
                     ,function(data ){ //callback on success
-			alert(data);
+			console.log(data);
 		})
 		.fail(function(){
 			alert('error');
 			})
 	})	
 }( jQuery ));
+//save the form when the list order is changed
+$('.sortable').sortable({
+    update: function(){
+        console.log('Form order changed: Saving to server');
+    }
+});
 
 						
 							
