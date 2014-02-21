@@ -1,0 +1,20 @@
+#outputForm{
+	list-style-type:none;
+}
+#resultsForm{
+	list-style-type:none;
+}
+.sortable:hover  * {
+	cursor: move;
+}
+.controls-wrapper{
+	cursor: move;
+}
+
+
+
+.area{
+
+	border:2px solid silver;
+	height: 500px
+	}
