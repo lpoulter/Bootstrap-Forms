@@ -92,7 +92,7 @@ public class NewServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             /* TODO output your page here. You may use following sample code. */
-            out.println("Form Saved");
+            out.println("Message from Server: Form Saved");
         } finally {            
             out.close();
         }
