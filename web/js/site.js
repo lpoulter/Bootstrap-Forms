@@ -83,7 +83,7 @@ function init() {
             toAppend.buildHTML();
         break;
         default:
-                console.log(options.element + 'No element given');
+                console.log('No element given');
         }
 		//html to append
 		var outputHTML;
@@ -153,7 +153,7 @@ function bsFormElement(options) {
                 this.html+='</div></div></li>';
             break;
         default:
-                console.log(options.element + 'No type given');
+                console.log('No type given');
         }
     
     
