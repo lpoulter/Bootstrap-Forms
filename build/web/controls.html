@@ -14,14 +14,16 @@
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 </head>
 <body>
+<!-- Nav tabs -->
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#ElementSelect" data-toggle="tab">Element Select</a></li>
+  <li><a href="#settings" data-toggle="tab">Element Settings</a></li>
+</ul>
 
-	<div class="container area col-sm-6" id="selectArea" >
-		<div class="text-center">
-			<ul class="pagination pagination-lg"> 
-				<li><a href="#selectBtnGroup">Select Element</a></li>
-				<li><a href="#elementsOptions">Element Options </a></li>
-			</ul>
-		</div>
+<!-- Tab panes -->
+<div class="tab-content">
+    <div class="tab-pane active" id="ElementSelect">
+        <div class="container area col-sm-6" id="selectArea" >
 		<div class="text-center">
 			<span class="label label-info draggable" id="textBoxController">Text Box</span>
 			<span class="label label-info draggable " id="textAreaController">Text Area</span>
@@ -30,7 +32,20 @@
                         <span class="label label-info draggable" id="checkController">Check Boxes</span>
 			<button id="saveBtn">Save</button>
 		</div>		 
-	</div>
+	</div>  
+    </div>
+  <div class="tab-pane" id="settings">
+        <div class="container area col-sm-6" id="selectArea" >
+		<div class="text-center">
+                    <label for="labelRename">Enter new label</label>
+                    <input id="labelRename"type="text" placeholder="Please enter a label">
+		</div>		 
+	</div> 
+  
+  </div>
+</div>
+
+
 	<div class="container area col-sm-6" id="resultArea">
 	<form class="form-horizontal" role="form">
 			<ul class="sortable" id="outputForm">

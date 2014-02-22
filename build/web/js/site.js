@@ -1,6 +1,5 @@
 $(function() {
     $( ".sortable" ).sortable();
-    
   });
 $( init );
  
@@ -106,27 +105,27 @@ function bsFormElement(options) {
     this.placeholder = options.placeHolder;
     this.glyphicon = options.glyphicon;
     this.multiOptions = options.multiOptions;
+    this.class = 'formElement'; //need to wire this up to html below
     this.html;
-    this.id = idCount;
+    this.id = idCount; //make li have the id
     idCount++;
     this.buildHTML = function(){
         switch(this.type){
         case 'textBox': 
-            this.html = '<li><div class="form-group"><label for="textBox" class="col-sm-3 control-label">'+
+            this.html = '<li class="formElement" id="'+this.type+this.id+'"><div class="form-group"><label for="textBox" class="col-sm-3 control-label">'+
                     this.label+'</label><div class="col-sm-9"><div class="input-group"><span class="input-group-addon"><span class="'+
-                    this.glyphicon+'"></span></span><input type="email" class="form-control" id="'+
-                    this.id+'textBox" placeholder="'+
+                    this.glyphicon+'"></span></span><input type="email" class="form-control"  placeholder="'+
                     this.placeholder+'"></div></div></div></li>'
                 break;
         case 'textArea':
-            this.html = '<li><div class="form-group"><label for="textArea" class="col-sm-3 control-label">'+
+            this.html = '<li class="formElement" id="'+this.type+this.id+'"><div class="form-group"><label for="textArea" class="col-sm-3 control-label">'+
                     this.label+'</label><div class="col-sm-9"><div class="input-group"><span class="input-group-addon"><span class="'+
                     this.glyphicon+'"></span></span><textarea class="form-control" id="'+
                     this.id+'textArea" placeholder="'+
                     this.placeholder+'"></textarea></div></div></div></li>'
             break;
         case 'dropdown':
-            this.html = '<li><div class="form-group"><label for="dropdown" class="col-sm-3 control-label">'+
+            this.html = '<li class="formElement" id="'+this.type+this.id+'"><div class="form-group"><label for="dropdown" class="col-sm-3 control-label">'+
                     this.label+'</label><div class="col-sm-9"><div class="input-group"><div class="dropdown"><button class="btn" +\n\
                     data-toggle="dropdown" id="dropdown">'+
                     this.placeholder+ ' '+ '<span class="caret"></span></button><ul class="dropdown-menu">';
@@ -137,7 +136,7 @@ function bsFormElement(options) {
                     this.html+='</ul></div></div></div></div></li>'
             break;
         case 'radio':
-            this.html = '<li> <div class="form-group"> <div class="col-sm-9 col-sm-offset-3 "> <span><b>'
+            this.html = '<li class="formElement" id="'+this.type+this.id+'"> <div class="form-group"> <div class="col-sm-9 col-sm-offset-3 "> <span><b>'
                     +this.label+'</b></span><br />';
                 for (var i = 0; i < this.multiOptions.length; i++) {
                     this.html += '<div class="radio"><label><input type="radio" name="count" value="hot" />'+this.multiOptions[i]+'</label><br/></div>'
@@ -145,7 +144,7 @@ function bsFormElement(options) {
                 this.html+='</div></div></li>';
             break;
         case 'check':
-            this.html = '<li> <div class="form-group"> <div class="col-sm-9 col-sm-offset-3 "> <span><b>'
+            this.html = '<li class="formElement" id="'+this.type+this.id+'"> <div class="form-group"> <div class="col-sm-9 col-sm-offset-3 "> <span><b>'
                     +this.label+'</b></span><br />';
                 for (var i = 0; i < this.multiOptions.length; i++) {
                     this.html += '<div class="checkbox"><label><input type="checkbox" />'+this.multiOptions[i]+'</label><br/></div>'
@@ -192,6 +191,13 @@ $('.sortable').sortable({
         console.log('Form order changed: Saving to server');
     }
 });
+//update label needs finshes
+$(function() {
+    $('.sortable').on('click', 'li', function(event){
+    var clicked_element_id = $(this).attr('id');
+    alert(clicked_element_id);
+});
+  });
 
 						
 							
