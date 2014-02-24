@@ -1,3 +1,12 @@
+function formElements(){
+    //key: id, val: formElement
+   var formElements = {};
+
+   this.setData  = function(key, val) { formElements[key] = val;}
+   this.getData = function(key) { return formElements[key]; }
+}
+   var allFormElements = new formElements();
+   var elementIDLastClicked = 0;
 $(function() {
     $( ".sortable" ).sortable();
   });
@@ -41,6 +50,7 @@ function init() {
                     glyphicon: 'glyphicon glyphicon-font'
                 });
                 toAppend.buildHTML();
+                
                 break;
         case 'textAreaController':
                 //create a new bj to append
@@ -87,9 +97,10 @@ function init() {
         }
 		//html to append
 		var outputHTML;
-//		console.log('appeded ID: ' + toAppend.id);
-//                console.log('appeded Label: ' + toAppend.label);
-//                console.log(toAppend.html);
+
+//append the new element to array.
+        allFormElements.setData(toAppend.id,toAppend);
+        console.log(toAppend.id);
         return this.append(toAppend.html);
     };
 
@@ -112,20 +123,21 @@ function bsFormElement(options) {
     this.buildHTML = function(){
         switch(this.type){
         case 'textBox': 
-            this.html = '<li class="formElement" id="'+this.type+this.id+'"><div class="form-group"><label for="textBox" class="col-sm-3 control-label">'+
+            this.html = '<li class="formElement" id="'+this.id+'"><div class="form-group"><label for="textBox" class="col-sm-3 control-label">'+
                     this.label+'</label><div class="col-sm-9"><div class="input-group"><span class="input-group-addon"><span class="'+
                     this.glyphicon+'"></span></span><input type="email" class="form-control"  placeholder="'+
                     this.placeholder+'"></div></div></div></li>'
                 break;
         case 'textArea':
-            this.html = '<li class="formElement" id="'+this.type+this.id+'"><div class="form-group"><label for="textArea" class="col-sm-3 control-label">'+
+            console.log('build label: '+ this.label);
+            this.html = '<li class="formElement" id="'+this.id+'"><div class="form-group"><label for="textArea" class="col-sm-3 control-label">'+
                     this.label+'</label><div class="col-sm-9"><div class="input-group"><span class="input-group-addon"><span class="'+
                     this.glyphicon+'"></span></span><textarea class="form-control" id="'+
                     this.id+'textArea" placeholder="'+
                     this.placeholder+'"></textarea></div></div></div></li>'
             break;
         case 'dropdown':
-            this.html = '<li class="formElement" id="'+this.type+this.id+'"><div class="form-group"><label for="dropdown" class="col-sm-3 control-label">'+
+            this.html = '<li class="formElement" id="'+this.id+'"><div class="form-group"><label for="dropdown" class="col-sm-3 control-label">'+
                     this.label+'</label><div class="col-sm-9"><div class="input-group"><div class="dropdown"><button class="btn" +\n\
                     data-toggle="dropdown" id="dropdown">'+
                     this.placeholder+ ' '+ '<span class="caret"></span></button><ul class="dropdown-menu">';
@@ -136,7 +148,7 @@ function bsFormElement(options) {
                     this.html+='</ul></div></div></div></div></li>'
             break;
         case 'radio':
-            this.html = '<li class="formElement" id="'+this.type+this.id+'"> <div class="form-group"> <div class="col-sm-9 col-sm-offset-3 "> <span><b>'
+            this.html = '<li class="formElement" id="'+this.id+'"> <div class="form-group"> <div class="col-sm-9 col-sm-offset-3 "> <span><b>'
                     +this.label+'</b></span><br />';
                 for (var i = 0; i < this.multiOptions.length; i++) {
                     this.html += '<div class="radio"><label><input type="radio" name="count" value="hot" />'+this.multiOptions[i]+'</label><br/></div>'
@@ -144,7 +156,7 @@ function bsFormElement(options) {
                 this.html+='</div></div></li>';
             break;
         case 'check':
-            this.html = '<li class="formElement" id="'+this.type+this.id+'"> <div class="form-group"> <div class="col-sm-9 col-sm-offset-3 "> <span><b>'
+            this.html = '<li class="formElement" id="'+this.id+'"> <div class="form-group"> <div class="col-sm-9 col-sm-offset-3 "> <span><b>'
                     +this.label+'</b></span><br />';
                 for (var i = 0; i < this.multiOptions.length; i++) {
                     this.html += '<div class="checkbox"><label><input type="checkbox" />'+this.multiOptions[i]+'</label><br/></div>'
@@ -159,7 +171,7 @@ function bsFormElement(options) {
     }
 };
 bsFormElement.prototype.toString= function() {
-    return 'Shape at '+this.type+', '+this.baseHTML;
+    return 'Element at '+this.type+', '+this.baseHTML;
 };
 
 //var test = new bsFormElement('textArea','Text Area');
@@ -194,11 +206,37 @@ $('.sortable').sortable({
 //update label needs finshes
 $(function() {
     $('.sortable').on('click', 'li', function(event){
-    var clicked_element_id = $(this).attr('id');
-    alert(clicked_element_id);
+    var clickElementId = $(this).attr('id');
+    console.log('click id: ' + clickElementId);
+    elementIDLastClicked = clickElementId;
+    //alert(clicked_element_id);
+//    $('#elementSelTab').removeClass('active');
+//    $('#settingsTab').addClass('active');
+    $('#settingsTab a:last').tab('show');
+    console.log(allFormElements.getData(clickElementId));
+    $(this).replaceWith(updateElement(clickElementId,'label','bedTime'));
+    
+
+    
 });
   });
+  //takes element id,property,value of bsFormElement
+  function updateElement(id,property,value){
+      
+      elementToChange = allFormElements.getData(id);
+      propertyToChange = elementToChange[property] = value;
+      console.log('prop to change: '+ propertyToChange);
+      console.log('updated label before: '+ elementToChange.label);
 
+      
+      elementToChange.buildHTML();
+      console.log('updated label: after '+ elementToChange.label);
+      return elementToChange.html;
+      //$( '#outputForm').appendElement(elementToChange.buildHTML());
+  }
+
+// create a method that on key up of any elment setting text box call's update
+// element with global varible elementIDLastClicked and new value.
 						
 							
 

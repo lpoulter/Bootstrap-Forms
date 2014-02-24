@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>BootStrap Forms</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 	<link rel="stylesheet" href="css/site.css">
 	
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -11,28 +12,48 @@
 	<script src="js/bootstrap.min.js"></script>
 	
 	<!-- not sure what this does maybe makes sortable smoother?-->
-	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+	
 </head>
 <body>
+<!-- Nav tabs -->
+<ul class="nav nav-tabs">
+  <li id="elementSelTab"class="active"><a href="#ElementSelect" data-toggle="tab">Element Select</a></li>
+  <li id="settingsTab"><a href="#settings" data-toggle="tab">Element Settings</a></li>
+</ul>
 
-	<div class="container area col-sm-6" id="selectArea" >
-		<div class="text-center">
-			<ul class="pagination pagination-lg"> 
-				<li><a href="#selectBtnGroup">Select Element</a></li>
-				<li><a href="#elementsOptions">Element Options </a></li>
-			</ul>
-		</div>
-		<div class="text-center controls-wrapper">
-			<span class="label label-info draggable" id="textBox">Text Box</span>
-			<span class="label label-info draggable " id="textArea">Text Area</span>
-			<span class="label label-info draggable" id="dropdown">Dropdown</span>
+<!-- Tab panes -->
+<div class="tab-content">
+    <div class="tab-pane active" id="ElementSelect">
+        <div class="container area col-sm-4" id="selectArea" >
+		<div class="text-center" >
+			<span class="label label-info draggable" id="textBoxController">Text Box</span>
+			<span class="label label-info draggable " id="textAreaController">Text Area</span>
+			<span class="label label-info draggable" id="dropdownController">Dropdown</span>
+                        <span class="label label-info draggable" id="radioController">Radio Buttons</span>
+                        <span class="label label-info draggable" id="checkController">Check Boxes</span>
+
+                        <button id="saveBtn">Save form</button>
 		</div>		 
-	</div>
-	<div class="container area col-sm-6" id="resultArea">
+	</div>  
+    </div>
+  <div class="tab-pane" id="settings">
+        <div class="container area col-sm-4" id="selectArea" >
+		<div class="text-center">
+                    <label for="labelRename">Enter new label</label>
+                    <input id="labelRename"type="text" placeholder="Please enter a label">
+		</div>		 
+	</div> 
+  
+  </div>
+</div>
+
+
+	<div class="container area col-sm-8" id="resultArea">
 	<form class="form-horizontal" role="form">
 			<ul class="sortable" id="outputForm">
 
 			</ul>
+            			
 		</form>
 	
 	

@@ -3,18 +3,36 @@
 }
 #resultsForm{
 	list-style-type:none;
+        padding-top: 5px;
 }
 .sortable:hover  * {
 	cursor: move;
 }
-.controls-wrapper{
+#selectArea{
 	cursor: move;
+        padding: 5px;
+}
+
+.label{
+    text-align: center;
+    line-height: 50px;
+    display: inline-block;
+    float: left;
+    height: 50px;
+    width: 100px;
+    margin: 3px;
+}
+
+#saveBtn{
+    position: absolute;
+    bottom: 60px;
+    left: 20px;
 }
 
 
 
 .area{
 
-	border:2px solid silver;
-	height: 500px
+	border:1px solid silver;
+	min-height: 500px
 	}
