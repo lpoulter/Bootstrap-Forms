@@ -21,6 +21,7 @@
     height: 50px;
     width: 100px;
     margin: 3px;
+    box-shadow: 0 8px 6px -8px black;
 }
 
 #saveBtn{
