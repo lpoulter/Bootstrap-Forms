@@ -3,10 +3,12 @@
 }
 #resultsForm{
 	list-style-type:none;
-        padding-top: 5px;
 }
 .sortable:hover  * {
 	cursor: move;
+}
+#resultArea{
+    padding: 10px;
 }
 #selectArea{
 	cursor: move;

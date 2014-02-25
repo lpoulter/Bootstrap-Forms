@@ -15,50 +15,51 @@
 	
 </head>
 <body>
-<!-- Nav tabs -->
-<ul class="nav nav-tabs">
-  <li id="elementSelTab"class="active"><a href="#ElementSelect" data-toggle="tab">Element Select</a></li>
-  <li id="settingsTab"><a href="#settings" data-toggle="tab">Element Settings</a></li>
-</ul>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs">
+      <li id="elementSelTab"class="active"><a href="#ElementSelect" data-toggle="tab">Element Select</a></li>
+      <li id="settingsTab"><a href="#settings" data-toggle="tab">Element Settings</a></li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane active" id="ElementSelect">
+            <div class="container area col-sm-4" id="selectArea" >
+                    <div class="text-center" >
+                            <span class="label label-info draggable" id="textBoxController">Text Box</span>
+                            <span class="label label-info draggable " id="textAreaController">Text Area</span>
+                            <span class="label label-info draggable" id="dropdownController">Dropdown</span>
+                            <span class="label label-info draggable" id="radioController">Radio Buttons</span>
+                            <span class="label label-info draggable" id="checkController">Check Boxes</span>
+                            <span class="glyphicon glyphicon-minus-sign"> delete to add on hover later</span>
+                            <span class="glyphicon glyphicon-plus-sign"> add element to add on hover later</span>
+                            <button id="saveBtn">Save form</button>
+                    </div>		 
+            </div>  
+        </div>
+      <div class="tab-pane" id="settings">
+            <div class="container area col-sm-4" id="selectArea" >
+                    <div class="text-center">
+                        <form id="settingsForm">
+                            <label for="elementID">Element to change ID</label>
+                            <span id="elementId"></span><br/>
+                            <label for="labelRename">Enter new label</label>
+                            <input id="labelRename"type="text" placeholder="Please enter a label"> 
+                        </form>       
 
-<!-- Tab panes -->
-<div class="tab-content">
-    <div class="tab-pane active" id="ElementSelect">
-        <div class="container area col-sm-4" id="selectArea" >
-		<div class="text-center" >
-			<span class="label label-info draggable" id="textBoxController">Text Box</span>
-			<span class="label label-info draggable " id="textAreaController">Text Area</span>
-			<span class="label label-info draggable" id="dropdownController">Dropdown</span>
-                        <span class="label label-info draggable" id="radioController">Radio Buttons</span>
-                        <span class="label label-info draggable" id="checkController">Check Boxes</span>
-<span class="glyphicon glyphicon-minus-sign"> delete to add on hover later</span>
-<span class="glyphicon glyphicon-plus-sign"> add element to add on hover later</span>
-                        <button id="saveBtn">Save form</button>
-		</div>		 
-	</div>  
+                    </div>		 
+            </div> 
+      </div>
     </div>
-  <div class="tab-pane" id="settings">
-        <div class="container area col-sm-4" id="selectArea" >
-		<div class="text-center">
-                    <label for="labelRename">Enter new label</label>
-                    <input id="labelRename"type="text" placeholder="Please enter a label">
-		</div>		 
-	</div> 
-  
-  </div>
-</div>
+    <!-- END Tab panes  -->
 
 
-	<div class="container area col-sm-8" id="resultArea">
-	<form class="form-horizontal" role="form">
-			<ul class="sortable" id="outputForm">
-
-			</ul>
-            			
-		</form>
-	
-	
-	</div>
-	<script src="js/site.js"></script>
+    <div class="container area col-sm-8" id="resultArea">
+        <form class="form-horizontal">
+        <ul class="sortable" id="outputForm">
+            <!-- Dragged elements will be added here  -->
+        </ul>
+        </form>
+    </div>
+    <script src="js/site.js"></script>
 </body>
 </html>
