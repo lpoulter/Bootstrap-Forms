@@ -4,18 +4,22 @@
 #resultsForm{
 	list-style-type:none;
 }
-.sortable:hover  * {
+/*.sortable:hover  * {
 	cursor: move;
-}
+}*/
 #resultArea{
     padding: 10px;
+    cursor: move;
 }
 #selectArea{
-	cursor: move;
+
         padding: 5px;
 }
-
+.draggable{
+    	cursor: move;
+}
 .label{
+    cursor: move;
     text-align: center;
     line-height: 50px;
     display: inline-block;
