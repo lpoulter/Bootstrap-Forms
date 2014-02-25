@@ -196,6 +196,10 @@ glyphicon: 'glyphicon-align-justify'
 			alert('error');
 			})
 	})	
+        $('#resetBtn').click(function(e){
+               $('#outputForm').empty();
+               
+	}) 
 }( jQuery ));
 //save the form when the list order is changed
 $('.sortable').sortable({
