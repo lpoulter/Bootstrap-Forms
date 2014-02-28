@@ -9,14 +9,15 @@
 }*/
 #resultArea{
     padding: 10px;
-    cursor: move;
 }
 #selectArea{
-
         padding: 5px;
 }
 .draggable{
     	cursor: move;
+}
+.sortable{
+    cursor: move;
 }
 .label{
     cursor: move;

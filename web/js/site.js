@@ -232,18 +232,16 @@ $('#resetBtn').click(function(e){
 $('.sortable').sortable({
     update: postJSON
 });
-//update label needs finshes
+
+// loads and set-up settings tab. needs expansion to build settings html
 $(function() {
     $('.sortable').on('click', 'li', function(event){
-    var clickElementId = $(this).attr('id');
-    console.log('click id: ' + clickElementId);
-    elementIDLastClicked = clickElementId;
-    //load settings tab.
-    $('#settingsTab a:last').tab('show');
-    
-    $('#elementId').html(clickElementId);
-
-    
+        $('#labelRename').val(''); //clear old label
+        var clickElementId = $(this).attr('id');
+        elementIDLastClicked = clickElementId;
+        //switch to settings tab.
+        $('#settingsTab a:last').tab('show');
+        $('#elementId').html(clickElementId);
 });
   });
   //takes element id,property,value of bsFormElement
@@ -252,7 +250,8 @@ $(function() {
       var elementToChange = testFormElements[id];
       propertyToChange = elementToChange[property] = value;
       elementToChange.buildHTML();
-      console.log('updated label: after '+ elementToChange.label);
+      
+      //console.log('updated label: after '+ elementToChange.label);
       return elementToChange.html;
       //$( '#outputForm').appendElement(elementToChange.buildHTML());
   }

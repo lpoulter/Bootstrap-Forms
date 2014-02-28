@@ -85,14 +85,14 @@ public class NewServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String formHTML;
-        formHTML = request.getParameter("form");
-        System.out.println("form is " + formHTML);
+        String formJSON;
+        formJSON = request.getParameter("form");
+        System.out.println("form is " + formJSON);
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
             /* TODO output your page here. You may use following sample code. */
-            out.println("Message from Server: Form Saved");
+            out.println("Message from Server: Form Saved " + formJSON );
         } finally {            
             out.close();
         }
