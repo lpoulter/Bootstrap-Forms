@@ -2,6 +2,7 @@
 var idCount = 0; //hold the next element id.
 //var allFormElements = new formElements();
 var elementIDLastClicked = 0;
+var elementSelected = false;
 
 //form Element object- pass propeties as options.
 function bsFormElement(options) {
@@ -138,8 +139,7 @@ var testFormElements = {};
                 toAppend = new bsFormElement({
                     type: 'dropdown',
                     label: 'Dropdown',
-                    placeHolder: 'Pick One',
-                    glyphicon: 'glyphicon-align-justify',     
+                    placeHolder: 'Pick One',    
                     multiOptions: [1,2,3,99,101,514]
                 });
                 toAppend.buildHTML();
@@ -149,7 +149,7 @@ var testFormElements = {};
             //create a new bj to append
             toAppend = new bsFormElement({
                 type: 'radio',
-                label: 'Pick One',     
+                label: 'Pick Only One',     
                 multiOptions: ['hot','cold','rainy']
             });
             toAppend.buildHTML();
@@ -159,8 +159,7 @@ var testFormElements = {};
             //create a new bj to append
             toAppend = new bsFormElement({
                 type: 'check',
-                label: 'Pick One at least one?',
-                glyphicon: 'glyphicon-align-justify',     
+                label: 'Pick One at least one?',    
                 multiOptions: [1,2,3,99,101]
             });
             toAppend.buildHTML();
@@ -233,17 +232,7 @@ $('.sortable').sortable({
     update: postJSON
 });
 
-// loads and set-up settings tab. needs expansion to build settings html
-$(function() {
-    $('.sortable').on('click', 'li', function(event){
-        $('#labelRename').val(''); //clear old label
-        var clickElementId = $(this).attr('id');
-        elementIDLastClicked = clickElementId;
-        //switch to settings tab.
-        $('#settingsTab a:last').tab('show');
-        $('#elementId').html(clickElementId);
-});
-  });
+
   //takes element id,property,value of bsFormElement
   function updateElement(id,property,value){
       
@@ -255,17 +244,178 @@ $(function() {
       return elementToChange.html;
       //$( '#outputForm').appendElement(elementToChange.buildHTML());
   }
-
+// loads and set-up settings tab. needs expansion to build settings html
 $(function() {
-    $('#settingsForm').on('keyup', 'input', function(event){
+    $('.sortable').on('click', 'li', function(event){
+        elementSelected = true;
+        $('#settingsTab a:last').tab('show'); //switch to settings tab;
+        $('#elementId').html(clickElementId); //for testing
         
-       var elementToChange = $('#elementId').text();
-       console.log(elementToChange);
-       var newValue = $(this).val();
-        $('#' + elementToChange)
-                .replaceWith(updateElement(elementToChange,'label',newValue));
+        var clickElementId = $(this).attr('id');
+        
+        //not first click on ele
+        if(elementIDLastClicked !== clickElementId){
+            settingsBuild(clickElementId);
+        }
+        // update last clicked.
+        elementIDLastClicked = clickElementId;
+ 
+        $('#labelRename').val(''); //clear old label
+        
+        
+        //switch to settings tab.
+        
+        
+    });
 });
-  });
+  
+
+  
+function settingsBuild(clickElementId){
+    //$('#labelRename').val(''); //clear old label
+    var elementObj = testFormElements[clickElementId]; //get obj clicked
+    $('#settingsForm').empty(); //clear last settings options
+    //
+    var questionFormGroup = $('<div class="form-group">');
+    var newQuestionLabel = $("<label>").text('Question');
+    newQuestionLabel.attr({
+                        for: 'labelRename',
+                        class: 'col-sm-3 control-label'
+                        });
+                        
+    var newQuestionDiv = $('<div class="col-sm-9">');
+    
+    var newQuestionInput = $('<input>').attr({
+                                    id: 'labelRename', 
+                                    name: 'labelRename',
+                                    placeholder:'Type your question',
+                                    type: 'text',
+                                    class: 'form-control'
+                                    });
+     newQuestionDiv.append(newQuestionInput);                            
+     questionFormGroup.append(newQuestionLabel);  
+     questionFormGroup.append(newQuestionDiv);
+
+    $('#settingsForm').append(questionFormGroup);
+
+
+    
+    if(typeof elementObj.glyphicon !== 'undefined'){ //has a glyphicon
+ 
+        var iconFormGroup = $('<div class="form-group">');
+        var iconLabel = $("<label>").text('Pick a new icon');
+        iconLabel.attr({
+                        for: 'iconPicker',
+                        class: 'col-sm-3 control-label'
+                        });
+
+        var iconDiv = $('<div class="col-sm-9">');
+
+       // var iconbtn = <button id="abtn" class="btn btn-default" data-iconset="glyphicon" role="iconpicker"></button>
+
+        var oldIcon = elementObj.glyphicon.substr(elementObj.glyphicon.indexOf(" ") + 1);
+        var iconButton = $("<button>").addClass('btn btn-default');
+
+        iconButton = $('<button>').attr({
+                              id: 'iconPicker', 
+                              class: 'btn btn-default',
+                              role: 'iconpicker',
+                              name: 'icon',
+                              });
+        $(iconButton).iconpicker({ 
+              iconset: 'glyphicon',
+              icon: oldIcon, 
+              rows: 5,
+              cols: 5
+          });
+         iconDiv.append(iconButton);                            
+         iconFormGroup.append(iconLabel);  
+         iconFormGroup.append(iconDiv);
+
+        $('#settingsForm').append(iconFormGroup);
+
+       //Have to reload iconpicker script 
+        $.ajax({
+                url: 'js/bootstrap-iconpicker.min.js',
+                dataType: "script",
+              });
+              
+        //update icon to new one.     
+        $('#iconPicker').on('change', function(e) { 
+            
+            var newIcon = 'glyphicon ' + e.icon;
+            
+            var newHTML = updateElement(clickElementId,'glyphicon',newIcon );
+            $('#'+clickElementId).replaceWith(newHTML);
+        });
+    }; //end of icon pick
+    
+   if(typeof elementObj.placeholder !== 'undefined'){ 
+        var placeholderFormGroup = $('<div class="form-group">');
+        var placeholderLabel = $("<label>").text('Placeholder');
+        placeholderLabel.attr({
+                            for: 'placeholderRename',
+                            class: 'col-sm-3 control-label'
+                            });
+
+        var placeholderDiv = $('<div class="col-sm-9">');
+
+        var placeholderInput = $('<input>').attr({
+                                        id: 'placeholderRename', 
+                                        name: 'placeholderRename',
+                                        placeholder:'Enter a new placholder',
+                                        type: 'text',
+                                        class: 'form-control'
+                                        });
+         placeholderDiv.append(placeholderInput);                            
+         placeholderFormGroup.append(placeholderLabel);  
+         placeholderFormGroup.append(placeholderDiv);
+
+        $('#settingsForm').append(placeholderFormGroup);
+       
+   }
+   
+   if(typeof elementObj.multiOptions !== 'undefined'){ 
+       //need to code this. loopover options.
+       var optionsArray = elementObj.multiOptions;
+       for(var option in optionsArray){
+           console.log(elementObj.multiOptions[option]);
+       }
+       
+   }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    //handlers for settings form
+    //question
+    $('input[name="labelRename"]').keyup(function(event){       
+     var newValue = $(this).val();
+      $('#' + clickElementId)
+              .replaceWith(updateElement(clickElementId,'label',newValue));
+     });
+     
+     //placholder
+    $('input[name="placeholderRename"]').keyup(function(event){       
+     var newValue = $(this).val();
+     //console.log('palce');
+      $('#' + clickElementId)
+              .replaceWith(updateElement(clickElementId,'placeholder',newValue));
+     });
+    
+                             
+
+    
+    
+};
 //    switch
 //    $(this).replaceWith(updateElement(clickElementId,'label','bedTime'));
 //}
